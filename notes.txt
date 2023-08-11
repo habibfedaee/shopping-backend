@@ -23,3 +23,12 @@ create an api that manages the follow data
 
 create crud functions in order to add, edit, delete the records.
 
+
+
+ > get all shoppingitems : http get :9000/api/shopping_item
+
+ > get shoppingitems by id : http get :9000/api/shopping_item/:id
+
+ > post shoppingitem : http post :9000/api/shopping_items shopping_item=itemName
+
+ > put shoppingitem : http put :9000/api/shopping_items/id/ 
