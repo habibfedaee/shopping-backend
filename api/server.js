@@ -46,7 +46,7 @@ server.post("/api/shopping_items", async (req, res) => {
   } else {
     try {
       // 2- interact with db
-      const newlyCreatedItem = await Shopping_items.create(item);
+      const newlyCreatedItem = await Shopping_items.create(item.shopping_item);
       // 3- send appropriate response
       res.status(201).json(newlyCreatedItem);
     } catch (error) {
@@ -55,37 +55,44 @@ server.post("/api/shopping_items", async (req, res) => {
   }
 });
 
-// update shopping items
+// simple update:
 server.put("/api/shopping_items/:id", async (req, res) => {
-  // 1- pull info from req
   const changes = req.body;
-  const { id } = req.params;
-
-  // crude validation of req.body
+  const id = req.params.id;
   if (
-    !changes.Shopping_item ||
+    !changes.shopping_item ||
     !changes.isCompleted ||
     changes.isEdited === undefined
   ) {
-    res
-      .status(400)
-      .json({ message: "shoppingItem, iscompleted and IsEdited are required" });
+    res.status(400).json({ message: "shopping item cannot be empty!!! " });
   } else {
     try {
-      // 2- interact with db through helper
       const updatedItem = await Shopping_items.update(id, changes);
-      // 3- send appropriate response
       if (updatedItem) {
         res.status(200).json(updatedItem);
       } else {
         res
           .status(404)
-          .json({ message: "shoppingItem not found with id " + id });
+          .json({ message: "shopping item not found with the given id " + id });
       }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    } catch (error) {}
   }
+});
+
+// delete shoppingItem
+server.delete("/api/shopping_items/:id", (req, res) => {
+  const { id } = req.params;
+  Shopping_items.delete(id)
+    .then((deleted) => {
+      if (deleted) {
+        res.status(201).json({ message: "deleted successfully!" });
+      } else {
+        res.status(404).json({ message: "no item with that id" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
 });
 
 module.exports = server;
