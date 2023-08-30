@@ -1,8 +1,10 @@
 const express = require("express");
+const cors = require("cors");
 const Shopping_items = require("./shopping-model.js");
 
 const server = express();
 server.use(express.json());
+server.use(cors());
 
 // get endpoint:
 server.get("/", (req, res) => {
