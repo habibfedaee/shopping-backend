@@ -39,7 +39,7 @@ module.exports = {
   async update(id, changes) {
     // update shopping_items set shopping_item='item3', isCompleted=true, isEdited=true;
     const item = shopping_items.find((item) => item.id == id);
-    const updatedItem = { ...changes, id };
+    const updatedItem = { ...changes, id: Number(id) };
     shopping_items = shopping_items.map((i) => ((i.id = id) ? updatedItem : i));
     return updatedItem;
   },

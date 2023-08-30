@@ -25,7 +25,7 @@ create crud functions in order to add, edit, delete the records.
 
 
 
- > get all shoppingitems : http get :9000/api/shopping_item
+ > get all shoppingitems : 
 
  > get shoppingitems by id : http get :9000/api/shopping_item/:id
 
